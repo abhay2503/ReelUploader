@@ -36,3 +36,7 @@ textarea {
 ::-webkit-scrollbar-thumb:hover {
   @apply bg-gray-600;
 }
+
+.animate-spin {
+  margin: auto;
+}

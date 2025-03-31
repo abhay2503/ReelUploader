@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import toast from "react-hot-toast";
-import { Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff, Loader } from "lucide-react";
 
 export default function Register() {
   const [email, setEmail] = useState("");
@@ -12,14 +12,18 @@ export default function Register() {
   const [showPassword, setShowPassword] = useState(false)
   const [confirmPassword, setConfirmPassword] = useState("");
   const router = useRouter();
+  const [loading, setLoading] = useState(false)
+
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
 
     if (password !== confirmPassword) {
       toast.error("Passwords do not match")
       return;
     }
+    setLoading(true)
 
     try {
       const res = await fetch("/api/auth/register", {
@@ -34,9 +38,11 @@ export default function Register() {
         throw new Error(data.error || "Registration failed");
       }
 
+      setLoading(false)
       toast.success("Registration successful! Please log in.")
       router.push("/login");
     } catch (error) {
+      setLoading(false)
       toast.error(error instanceof Error ? error.message : "Registration failed")
 
     }
@@ -99,9 +105,11 @@ export default function Register() {
         </div>
         <button
           type="submit"
-          className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600"
+          disabled={loading}
+          className={`w-full disabled:cursor-not-allowed disabled:bg-blue-300 bg-blue-500 text-white py-2 rounded hover:bg-blue-600`}
         >
-          Register
+          {loading ? <Loader className='animate-spin' /> : "Register"}
+
         </button>
         <p className="text-center mt-4">
           Already have an account?{" "}

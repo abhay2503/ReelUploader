@@ -5,27 +5,31 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import toast from "react-hot-toast";
-import { Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff, Loader } from "lucide-react";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false)
+  const [loading, setLoading] = useState(false)
 
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setLoading(true)
     const result = await signIn("credentials", {
       email,
       password,
       redirect: false,
     });
 
+    setLoading(false)
 
     if (result?.error) {
       toast.error(result.error)
     } else {
+
       toast.success("Login successfully!")
       router.replace("/");
       router.refresh()
@@ -68,9 +72,11 @@ export default function Login() {
         </div>
         <button
           type="submit"
-          className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600"
+          disabled={loading}
+          className={`w-full disabled:cursor-not-allowed disabled:bg-blue-300 bg-blue-500 text-white py-2 rounded hover:bg-blue-600`}
         >
-          Login
+          {loading ? <Loader className='animate-spin' /> : "Login"}
+
         </button>
         <p className="text-center mt-4">
           Don&apos;t have an account?{" "}
