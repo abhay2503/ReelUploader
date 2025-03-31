@@ -27,13 +27,8 @@ export default function VideoComponent({ video }: { video: IVideo }) {
       </figure>
 
       <div className="card-body p-4">
-        <Link
-          href={`/videos/${video._id}`}
-          className="hover:opacity-80 transition-opacity"
-        >
-          <h2 className="card-title text-lg">{video.title}</h2>
-        </Link>
 
+        <h2 className="card-title text-lg">{video.title}</h2>
         <p className="text-sm text-base-content/70 line-clamp-2">
           {video.description}
         </p>

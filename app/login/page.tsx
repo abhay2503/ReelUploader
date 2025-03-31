@@ -11,7 +11,8 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
-  const [showPassword, setShowPassword] = useState(true)
+  const [showPassword, setShowPassword] = useState(false)
+
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -21,11 +22,13 @@ export default function Login() {
       redirect: false,
     });
 
+
     if (result?.error) {
       toast.error(result.error)
     } else {
-      toast.success("Login successful!")
-      router.push("/");
+      toast.success("Login successfully!")
+      router.replace("/");
+      router.refresh()
     }
   };
 

@@ -11,6 +11,7 @@ export default function Home() {
   useEffect(() => {
     const fetchVideos = async () => {
       try {
+        console.log('fetched');
         const data = await apiClient.getVideos();
         setVideos(data);
       } catch (error) {

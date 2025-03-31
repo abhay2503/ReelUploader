@@ -9,7 +9,7 @@ const publicKey = process.env.NEXT_PUBLIC_PUBLIC_KEY!;
 export default function Providers({ children }: { children: React.ReactNode }) {
   const authenticator = async () => {
     try {
-      const res = await fetch("/api/imagekit-auth");
+      const res = await fetch("/api/imagekit-auth", { cache: 'no-store' });
       if (!res.ok) throw new Error("Failed to authenticate");
       return res.json();
     } catch (error) {
