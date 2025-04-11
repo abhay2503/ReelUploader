@@ -17,7 +17,6 @@ export default function Providers({ children }: { children: React.ReactNode }) {
       throw error;
     }
   };
-
   return (
     <SessionProvider refetchInterval={5 * 60}>
 
